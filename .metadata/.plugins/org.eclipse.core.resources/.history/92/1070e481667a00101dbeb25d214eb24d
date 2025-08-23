@@ -1,0 +1,57 @@
+package com.example.tasks;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        driver.get("https://demoqa.com/select-menu");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Locate the multiselect input box
+        WebElement multiSelectInput = driver.findElement(
+                By.xpath("//div[@id='selectMenuContainer']//input"));
+
+        // Values to select
+        String[] valuesToSelect = {"Green", "Blue", "Black"};
+
+        // Type and select each value
+        for (String val : valuesToSelect) {
+            multiSelectInput.sendKeys(val);
+            Thread.sleep(800); // wait for dropdown suggestions
+            multiSelectInput.sendKeys(Keys.ENTER);
+            Thread.sleep(1000);
+        }
+
+        // ✅ Get selected tags
+        List<WebElement> selectedOptions = driver.findElements(By.xpath(
+            "//div[contains(@class,'css-12jo7m5')]//div[contains(@class,'css-1rhbuit-multiValue')]"));
+
+        System.out.println("✅ Selected values:");
+        for (WebElement option : selectedOptions) {
+            System.out.println(" - " + option.getText());
+        }
+
+        // ✅ Validation
+        boolean allSelected = selectedOptions.stream()
+                .map(WebElement::getText)
+                .toList()
+                .containsAll(List.of("Green", "Blue", "Black"));
+
+        if (allSelected) {
+            System.out.println("✅ Multi-select dropdown works correctly!");
+        } else {
+            System.out.println("❌ Validation failed!");
+        }
+
+        driver.quit();
+    }
+}

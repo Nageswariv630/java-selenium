@@ -1,0 +1,24 @@
+package parameterization;
+
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import org.testng.annotations.Optional;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class ParamTest {
+
+    WebDriver driver;
+
+    @Parameters("url")
+    @Test
+    public void testWithFirefox(@Optional("https://google.com") String url) {
+        driver = new FirefoxDriver();
+        driver.get(url);
+
+        // Verify in console
+        System.out.println("Opened URL in Firefox: " + url);
+
+        driver.quit();
+    }
+}

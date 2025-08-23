@@ -1,0 +1,62 @@
+package com.example.tasks;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Arrays;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class MultiSelectDropdownColors {
+
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demoqa.com/select-menu");
+        driver.manage().window().maximize();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        List<String> colorsToSelect = Arrays.asList("Green", "Blue", "Black");
+
+        // Click the dropdown container to open the options
+        WebElement dropdownContainer = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]")
+        ));
+        dropdownContainer.click();
+
+        // Wait until options are visible
+        List<WebElement> options = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-yt9ioa-option')]")
+        ));
+
+        // Click each required color
+        for (WebElement option : options) {
+            String color = option.getText();
+            if (colorsToSelect.contains(color)) {
+                option.click();
+            }
+        }
+
+        // Fetch all selected values
+        List<WebElement> selectedElements = driver.findElements(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1rhbuit-multiValue')]//div[contains(@class,'css-1uccc91-singleValue')]")
+        );
+
+        System.out.println("\nSelected colors:");
+        for (WebElement selected : selectedElements) {
+            String text = selected.getText();
+            System.out.println(text);
+            if (colorsToSelect.contains(text)) {
+                System.out.println(text + " is selected correctly.");
+            } else {
+                System.out.println(text + " is not expected.");
+            }
+        }
+
+        driver.quit();
+    }
+}

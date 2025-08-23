@@ -1,0 +1,59 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://demoqa.com/select-menu");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Actions actions = new Actions(driver);
+
+        // Click the multi-select dropdown
+        WebElement multiSelect = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]")));
+        multiSelect.click();
+
+        // Values to select
+        List<String> valuesToSelect = Arrays.asList("Green", "Blue", "Black");
+
+        for (String value : valuesToSelect) {
+            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[contains(@class,'css-11unzgr')]//div[text()='" + value + "']")));
+            option.click();
+        }
+
+        // Read all selected values from rendered tags
+        List<WebElement> selectedOptions = driver.findElements(By.cssSelector("div.css-1rhbuit-multiValue"));
+        List<String> selectedTexts = selectedOptions.stream()
+                .map(WebElement::getText)
+                .map(String::trim)
+                .collect(Collectors.toList());
+
+        System.out.println("✅ Selected values: " + selectedTexts);
+
+        // Validation
+        if (selectedTexts.containsAll(valuesToSelect) && valuesToSelect.containsAll(selectedTexts)) {
+            System.out.println("✅ Validation passed!");
+        } else {
+            System.out.println("❌ Validation failed!");
+        }
+
+        driver.quit();
+    }
+}

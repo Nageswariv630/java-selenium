@@ -1,0 +1,49 @@
+package com.example.tasks;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Arrays;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demoqa.com/select-menu");
+        driver.manage().window().maximize();
+
+        // Open the colors dropdown
+        WebElement dropdown = driver.findElement(By.id("react-select-4-container"));
+        dropdown.click();
+
+        // Colors to select
+        List<String> colorsToSelect = Arrays.asList("Green", "Blue");
+
+        for (String color : colorsToSelect) {
+            WebElement option = driver.findElement(
+                    By.xpath("//div[contains(@class,'css-11unzgr') and text()='" + color + "']"));
+            option.click();
+        }
+
+        // Get all selected colors
+        List<WebElement> selectedOptions = driver.findElements(
+                By.cssSelector("div.css-1rhbuit-multiValue span.css-1uccc91-singleValue"));
+
+        System.out.println("\nSelected colors:");
+        for (WebElement selected : selectedOptions) {
+            String text = selected.getText();
+            System.out.println(text);
+            if (colorsToSelect.contains(text)) {
+                System.out.println(text + " is selected correctly.");
+            } else {
+                System.out.println(text + " is not correct.");
+            }
+        }
+
+        driver.quit();
+    }
+}

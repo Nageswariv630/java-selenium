@@ -1,0 +1,50 @@
+package com.example.tasks;
+
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class MultiSelectDropdownDemo {
+
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        // Open the local HTML file
+        driver.get("file:///C:/path/to/colors.html"); // replace with your file path
+        driver.manage().window().maximize();
+
+        WebElement dropdown = driver.findElement(By.id("colors"));
+
+        Select select = new Select(dropdown);
+        List<WebElement> allOptions = select.getOptions();
+        System.out.println("All colors in dropdown:");
+        for (WebElement option : allOptions) {
+            System.out.println(option.getText());
+        }
+
+        // Select multiple colors
+        select.selectByVisibleText("Red");
+        select.selectByVisibleText("Blue");
+        select.selectByVisibleText("Green");
+
+        // Verify selected colors
+        List<WebElement> selectedOptions = select.getAllSelectedOptions();
+        System.out.println("\nSelected colors:");
+        for (WebElement selected : selectedOptions) {
+            String color = selected.getText();
+            System.out.println(color);
+            if (color.equals("Red") || color.equals("Blue") || color.equals("Green")) {
+                System.out.println(color + " is selected correctly.");
+            } else {
+                System.out.println(color + " is not expected.");
+            }
+        }
+
+        driver.quit();
+    }
+}

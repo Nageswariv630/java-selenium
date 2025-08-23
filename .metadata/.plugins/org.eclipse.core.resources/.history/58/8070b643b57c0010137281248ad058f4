@@ -1,0 +1,45 @@
+package com.example.seleniumadvanced;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class HandlingAlertBox {
+    public static void main(String[] args) {
+        // Setup Chrome WebDriver
+    	WebDriver driver=new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Navigate to demo site
+        driver.get("https://the-internet.herokuapp.com/javascript_alerts");
+
+        // ---------------- Task 1: Handle JS Alert ----------------
+        driver.findElement(By.xpath("//*[@id=\"content\"]/div/ul/li[1]/button")).click();
+
+        // Switch to alert
+        Alert alert1 = driver.switchTo().alert();
+        System.out.println("Alert Text: " + alert1.getText());  // print text
+        alert1.accept();  // accept the alert
+
+        // ---------------- Task 2: Handle JS Confirm ----------------
+        driver.findElement(By.xpath("//*[@id=\"content\"]/div/ul/li[2]/button")).click();
+
+        Alert alert2 = driver.switchTo().alert();
+        alert2.dismiss();  // dismiss alert
+        String confirmResult = driver.findElement(By.id("result")).getText();
+        System.out.println("Confirm Result: " + confirmResult);
+
+        // ---------------- Task 3: Handle JS Prompt ----------------
+        driver.findElement(By.xpath("//*[@id=\"content\"]/div/ul/li[3]/button")).click();
+
+        Alert alert3 = driver.switchTo().alert();
+        alert3.sendKeys("Your Name");  // enter text
+        alert3.accept();  // accept
+        String promptResult = driver.findElement(By.id("result")).getText();
+        System.out.println("Prompt Result: " + promptResult);
+
+        // Close browser
+        driver.quit();
+    }
+}

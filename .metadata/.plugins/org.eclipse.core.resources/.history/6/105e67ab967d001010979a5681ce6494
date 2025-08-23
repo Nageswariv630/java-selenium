@@ -1,0 +1,33 @@
+package tests;
+
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import org.testng.annotations.Optional;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class ParamTest {
+
+    WebDriver driver;
+
+    @Parameters({"url", "browser"})
+    @Test
+    public void openSite(@Optional("https://google.com") String url,
+                         @Optional("chrome") String browser) {
+
+        if (browser.equalsIgnoreCase("chrome")) {
+            driver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            driver = new FirefoxDriver();
+        } else {
+            throw new IllegalArgumentException("Browser not supported: " + browser);
+        }
+
+        driver.get(url);
+
+        System.out.println("Opened " + url + " in " + browser);
+
+        driver.quit();
+    }
+}

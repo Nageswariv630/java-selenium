@@ -1,0 +1,38 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class DropdownSelectDemo {
+    public static void main(String[] args) throws InterruptedException {
+        // Setup WebDriver
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Open URL
+        driver.get("https://www.globalsqa.com/demo-site/select-dropdown-menu/");
+
+        // Locate the dropdown directly (no iframe now)
+        WebElement countryDropdown = driver.findElement(By.xpath("//select"));
+
+        // Create Select object
+        Select select = new Select(countryDropdown);
+
+        // Select India by visible text
+        select.selectByVisibleText("India");
+
+        // Validate
+        String selectedOption = select.getFirstSelectedOption().getText();
+        if (selectedOption.equals("India")) {
+            System.out.println(" Successfully selected India!");
+        } else {
+            System.out.println(" Selection failed. Current: " + selectedOption);
+        }
+
+        Thread.sleep(2000);
+        driver.quit();
+    }
+}

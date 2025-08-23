@@ -1,0 +1,62 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://demoqa.com/select-menu");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Locate multi-select dropdown and click
+        WebElement multiSelect = driver.findElement(By.id("react-select-4-input"));
+        Actions actions = new Actions(driver);
+
+        // Values to select
+        String[] valuesToSelect = {"Green", "Blue", "Black"};
+
+        for (String value : valuesToSelect) {
+            // Type each value and press Enter
+            multiSelect.sendKeys(value);
+            Thread.sleep(500);
+            actions.sendKeys(org.openqa.selenium.Keys.ENTER).perform();
+            Thread.sleep(500);
+        }
+
+        // ✅ Get selected tags
+        List<WebElement> selectedOptions = driver.findElements(
+                By.cssSelector(".css-12jo7m5 .css-1rhbuit-multiValue"));
+
+        System.out.println("✅ Selected values:");
+        List<String> selectedTexts = selectedOptions.stream()
+                .map(WebElement::getText)
+                .map(text -> text.replace("×", "").trim())
+                .collect(Collectors.toList());
+
+        for (String text : selectedTexts) {
+            System.out.println(" - " + text);
+        }
+
+        // ✅ Validation
+        List<String> expected = List.of("Green", "Blue", "Black");
+        if (selectedTexts.containsAll(expected) && expected.containsAll(selectedTexts)) {
+            System.out.println("✅ Multi-select dropdown works correctly!");
+        } else {
+            System.out.println("❌ Validation failed!");
+        }
+
+        driver.quit();
+    }
+}

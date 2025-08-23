@@ -1,0 +1,49 @@
+package javadbconnect;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class DBConnect {
+
+	public static void main(String[] args) {
+
+// TODO Auto-generated method stub
+
+		String url = "jdbc:mysql://localhost:3306/wiprodb"; // DB URL
+
+		String username = "root";
+
+		String password = "root";
+
+		try {
+
+			Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+
+			Connection conn = DriverManager.getConnection(url, username, password);
+
+			System.out.println("Connected to DB!");
+
+			//conn.close();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		try {
+			String sql="INSERT INTO users(username,password)VALUES(?,?)";
+			Connection conn = null;
+			PreparedStatement stmt=conn.prepareStatement(sql);
+			stmt.setString(1, "Nasrin");
+			stmt.setString(2, "23456");
+			stmt.executeUpdate();
+			System.out.println("Record Inserted successfully");
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+}

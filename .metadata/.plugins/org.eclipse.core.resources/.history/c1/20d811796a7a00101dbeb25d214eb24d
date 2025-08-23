@@ -1,0 +1,66 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) {
+        // Setup ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver"); // <-- update path
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            driver.get("https://demoqa.com/select-menu");
+
+            // List of colors to select
+            List<String> colorsToSelect = Arrays.asList("Green", "Blue", "Black");
+
+            // Find the multi-select dropdown
+            WebElement multiSelect = driver.findElement(By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]"));
+            multiSelect.click();
+
+            Actions actions = new Actions(driver);
+
+            // Select each color
+            for (String color : colorsToSelect) {
+                WebElement option = driver.findElement(By.xpath("//div[contains(@class,'css-11unzgr')]//div[text()='" + color + "']"));
+                actions.moveToElement(option).click().perform();
+            }
+
+            // Fetch all selected values
+            List<WebElement> selectedElements = driver.findElements(
+                    By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1rhbuit-multiValue')]//div[contains(@class,'css-1uccc91-singleValue') or contains(@class,'css-1g6gooi')]")
+            );
+
+            List<String> selectedValues = new ArrayList<>();
+            for (WebElement el : selectedElements) {
+                selectedValues.add(el.getText().trim());
+            }
+
+            System.out.println("✅ Selected values: " + selectedValues);
+
+            // Validation
+            if (selectedValues.size() == colorsToSelect.size() && selectedValues.containsAll(colorsToSelect)) {
+                System.out.println("✅ Validation successful! All selected values are correct.");
+            } else {
+                System.out.println("❌ Validation failed! Selected values do not match expected: " + selectedValues);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+    }
+}

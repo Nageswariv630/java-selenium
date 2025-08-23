@@ -1,0 +1,48 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Suite">
+	<test name="ParamTest">
+		<parameter name="url" value="https://google.com" />
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="tests.ParamTest" />
+		</classes>
+	</test>
+	<test name="DependencyTest">
+		<classes>
+			<class name="tests.DependencyTest" />
+		</classes>
+	</test>
+	<test name="MultiThreadTest">
+		<classes>
+			<class name="tests.MultiThreadTest" />
+		</classes>
+	</test>
+	<test name="ExtentReportTest">
+		<classes>
+			<class name="tests.ExtentReportTest" />
+		</classes>
+	</test>
+    <test name="LoginTest">
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+    
+    <test name="MyListener">
+       <classes>
+        <class name="tests.MyListener"/>
+       </classes>
+    </test>
+    
+    <test name="ReportTest">
+       <classes>
+        <class name="tests.ReportTest"/>
+       </classes>
+    </test>
+    <test name="CrossBrowserTest">
+       <classes>
+        <class name="tests.CrossBrowserTest"/>
+       </classes>
+    </test>
+    
+</suite>

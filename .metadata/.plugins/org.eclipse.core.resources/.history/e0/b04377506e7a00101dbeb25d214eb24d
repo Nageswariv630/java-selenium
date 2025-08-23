@@ -1,0 +1,62 @@
+package com.example.tasks;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Arrays;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+public class MultiSelectDropdownDemo {
+
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demoqa.com/select-menu");
+        driver.manage().window().maximize();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Colors to select
+        List<String> colorsToSelect = Arrays.asList("Green", "Blue", "Black");
+
+        // Open multi-select dropdown
+        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]")
+        ));
+        dropdown.click();
+
+        // Select each color
+        for (String color : colorsToSelect) {
+            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[contains(@class,'css-11unzgr')]//div[text()='" + color + "']")
+            ));
+            option.click();
+        }
+
+        // Close dropdown by clicking outside
+        dropdown.click();
+
+        // Get all selected colors
+        List<WebElement> selectedElements = driver.findElements(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1rhbuit-multiValue')]//div[@class='css-1uccc91-singleValue']")
+        );
+
+        System.out.println("\nSelected colors:");
+        for (WebElement selected : selectedElements) {
+            String text = selected.getText();
+            System.out.println(text);
+            if (colorsToSelect.contains(text)) {
+                System.out.println(text + " is selected correctly.");
+            } else {
+                System.out.println(text + " is not expected.");
+            }
+        }
+
+        driver.quit();
+    }
+}

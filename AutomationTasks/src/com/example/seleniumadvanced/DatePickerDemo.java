@@ -1,0 +1,60 @@
+package com.example.seleniumadvanced;
+
+import java.time.LocalDate;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class DatePickerDemo {
+    public static void main(String[] args) throws InterruptedException {
+    	WebDriver driver=new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Open site
+        driver.get("https://jqueryui.com/datepicker/");
+
+        // The datepicker is inside an iframe → switch to it
+        driver.switchTo().frame(driver.findElement(By.className("demo-frame")));
+
+        // Locate the date input field
+        WebElement dateInput = driver.findElement(By.id("datepicker"));
+
+        // ---------------- Task 1: Select 15th of current month ----------------
+        dateInput.click(); // open calendar
+        driver.findElement(By.xpath("//a[text()='15']")).click(); // pick 15th
+        Thread.sleep(2000);
+
+        // Clear and reopen for next task
+        dateInput.clear();
+        dateInput.click();
+
+        // ---------------- Task 2: Select a date 2 months ahead ----------------
+        // Click "Next" twice
+        driver.findElement(By.xpath("//a[@title='Next']")).click();
+        driver.findElement(By.xpath("//a[@title='Next']")).click();
+        driver.findElement(By.xpath("//a[text()='10']")).click(); // example: 10th
+        Thread.sleep(2000);
+
+        // Clear and reopen again
+        dateInput.clear();
+        dateInput.click();
+
+        // ---------------- Task 3: Select today’s date dynamically ----------------
+        LocalDate today = LocalDate.now();  // current date
+        int day = today.getDayOfMonth();    // e.g. 19
+        String dayStr = String.valueOf(day);
+
+        // Pick today’s date from calendar
+        driver.findElement(By.xpath("//a[text()='" + dayStr + "']")).click();
+        Thread.sleep(2000);
+
+        // Print the selected date from input box
+        String selectedDate = dateInput.getAttribute("value");
+        System.out.println("Selected Date: " + selectedDate);
+
+        driver.quit();
+    }
+}
+

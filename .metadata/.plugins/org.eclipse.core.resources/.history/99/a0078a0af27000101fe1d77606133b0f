@@ -1,0 +1,35 @@
+package javadbconnect;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
+
+public class DBConnect {
+
+	public static void main(String[] args) {
+
+// TODO Auto-generated method stub
+
+		String url = "jdbc:mysql://localhost:3306/wiprodb"; // DB URL
+
+		String username = "root";
+
+		String password = "root";
+
+		try {
+
+			Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+
+			Connection conn = DriverManager.getConnection(url, username, password);
+
+			System.out.println("Connected to DB!");
+
+			conn.close();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+	}
+}

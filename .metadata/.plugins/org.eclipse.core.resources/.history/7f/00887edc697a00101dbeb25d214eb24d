@@ -1,0 +1,72 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MultiSelectDropdownDemo {
+
+    public static void main(String[] args) {
+
+        // 1️⃣ Set path to your ChromeDriver
+        //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver.exe"); // Update path
+
+        // 2️⃣ Initialize ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // 3️⃣ Open the URL
+            driver.get("https://demoqa.com/select-menu");
+            driver.manage().window().maximize();
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // 4️⃣ Open the multi-select dropdown
+            WebElement multiSelectDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]")));
+            multiSelectDropdown.click();
+
+            // 5️⃣ Values to select
+            List<String> colorsToSelect = List.of("Green", "Blue", "Black"); // Add any values you want
+
+            // 6️⃣ Select the values
+            for (String color : colorsToSelect) {
+                WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//div[contains(@class,'css-11unzgr')]//div[text()='" + color + "']")));
+                option.click();
+            }
+
+            // 7️⃣ Collect all selected values
+            List<WebElement> selectedElements = driver.findElements(
+                    By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1rhbuit-multiValue')]//div[@class='css-1uccc91-singleValue']"));
+
+            List<String> selectedValues = new ArrayList<>();
+            for (WebElement el : selectedElements) {
+                selectedValues.add(el.getText());
+            }
+
+            // 8️⃣ Print selected values
+            System.out.println("✅ Selected values: " + selectedValues);
+
+            // 9️⃣ Validate selected values
+            if (selectedValues.containsAll(colorsToSelect) && colorsToSelect.containsAll(selectedValues)) {
+                System.out.println("✅ Validation successful! All selected values are correct.");
+            } else {
+                System.out.println("❌ Validation failed! Selected values do not match expected.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 10️⃣ Close browser
+            driver.quit();
+        }
+    }
+}

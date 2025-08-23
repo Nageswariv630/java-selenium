@@ -1,0 +1,60 @@
+package com.example.tasks;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        driver.get("https://demoqa.com/select-menu");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Click the multiselect dropdown
+        WebElement multiSelect = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", multiSelect);
+        js.executeScript("arguments[0].click();", multiSelect);
+
+        Thread.sleep(1000);
+
+        // Select multiple options using JavaScript (to avoid interception issues)
+        String[] valuesToSelect = {"Green", "Blue", "Black"};
+
+        for (String val : valuesToSelect) {
+            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[contains(@class,'css-11unzgr')]//div[text()='" + val + "']")));
+            js.executeScript("arguments[0].click();", option);
+            Thread.sleep(800);
+        }
+
+        Thread.sleep(1500);
+
+        // ✅ Now get selected tags inside the box
+        List<WebElement> selectedOptions = driver.findElements(By.xpath(
+            "//div[contains(@class,'css-12jo7m5')]//div[contains(@class,'css-1rhbuit-multiValue')]"));
+
+        System.out.println("✅ Selected values:");
+        for (WebElement option : selectedOptions) {
+            System.out.println(" - " + option.getText());
+        }
+
+        // ✅ Validation
+        if (selectedOptions.stream().map(WebElement::getText).toList().containsAll(
+                List.of("Green", "Blue", "Black"))) {
+            System.out.println("✅ Multi-select dropdown works correctly!");
+        } else {
+            System.out.println("❌ Validation failed!");
+        }
+
+        driver.quit();
+    }
+}

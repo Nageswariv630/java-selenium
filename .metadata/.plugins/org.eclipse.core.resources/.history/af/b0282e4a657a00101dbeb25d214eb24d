@@ -1,0 +1,60 @@
+package com.example.tasks;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.List;
+
+public class MultiSelectDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        // Setup WebDriver
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Open DemoQA Select Menu page
+        driver.get("https://demoqa.com/select-menu");
+        Thread.sleep(2000);
+
+        // Locate the multi-select dropdown
+        WebElement multiSelect = driver.findElement(By.xpath("//div[@id='selectMenuContainer']//div[contains(@class,'css-1hwfws3')]"));
+
+        // Click to open dropdown
+        multiSelect.click();
+        Thread.sleep(1000);
+
+        // Select multiple values (Type and press Enter)
+        multiSelect.sendKeys("Green");
+        multiSelect.sendKeys(Keys.ENTER);
+
+        multiSelect.sendKeys("Blue");
+        multiSelect.sendKeys(Keys.ENTER);
+
+        multiSelect.sendKeys("Black");
+        multiSelect.sendKeys(Keys.ENTER);
+
+        Thread.sleep(2000);
+
+        // ✅ Print all selected values
+        List<WebElement> selectedOptions = driver.findElements(By.xpath("//div[contains(@class,'css-12jo7m5')]//div[contains(@class,'css-1rhbuit-multiValue')]"));
+        System.out.println(" Selected values:");
+        for (WebElement option : selectedOptions) {
+            System.out.println(" - " + option.getText());
+        }
+
+        // ✅ Validation
+        if (selectedOptions.size() == 3 &&
+            selectedOptions.get(0).getText().contains("Green") &&
+            selectedOptions.get(1).getText().contains("Blue") &&
+            selectedOptions.get(2).getText().contains("Black")) {
+            System.out.println(" Multi-select dropdown works correctly!");
+        } else {
+            System.out.println(" Validation failed!");
+        }
+
+        // Close browser
+        driver.quit();
+    }
+}

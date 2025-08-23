@@ -1,0 +1,26 @@
+package com.example.selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class selenium {
+	public static void main(String[] args) throws InterruptedException{
+		WebDriver driver=new ChromeDriver(); //open chrome
+		driver.get("https://www.demoblaze.com/#");  //navigate to website
+		driver.manage().window().maximize();   //to maximize the window
+		//to find contact by using xpath and open form
+		driver.findElement(By.xpath("//*[@id=\"navbarExample\"]/ul/li[2]")).click(); 
+		Thread.sleep(2000);  //to load the contacts form
+		// by using xpath  to find useremail input field
+		WebElement useremail=driver.findElement(By.xpath("//*[@id=\"recipient-email\"]"));
+		useremail.sendKeys("nageswariv630@gmail.com"); //to enter  useremail in input field
+		System.out.println(useremail.getAttribute("value")); //to print the entered email value 
+		WebElement username=driver.findElement(By.xpath("//*[@id=\"recipient-name\"]"));
+		username.sendKeys("nageswariv630@gmail.com"); //to enter  useremail in input field
+		System.out.println(username.getAttribute("value"));
+		
+	}
+
+}

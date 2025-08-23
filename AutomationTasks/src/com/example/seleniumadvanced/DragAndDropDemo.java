@@ -1,0 +1,52 @@
+package com.example.seleniumadvanced;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+public class DragAndDropDemo {
+    public static void main(String[] args) throws InterruptedException {
+    	WebDriver driver=new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Open site
+        driver.get("https://the-internet.herokuapp.com/drag_and_drop");
+
+        WebElement columnA = driver.findElement(By.id("column-a"));
+        WebElement columnB = driver.findElement(By.id("column-b"));
+
+        Actions actions = new Actions(driver);
+
+        // ---------------- Task 1: Drag column A → B ----------------
+        actions.dragAndDrop(columnA, columnB).perform();
+        Thread.sleep(2000);
+
+        String textA = driver.findElement(By.cssSelector("#column-a header")).getText();
+        String textB = driver.findElement(By.cssSelector("#column-b header")).getText();
+        System.out.println("After A → B : A=" + textA + " | B=" + textB);
+
+        // ---------------- Task 2: Drag column B → A ----------------
+        actions.dragAndDrop(columnB, columnA).perform();
+        Thread.sleep(2000);
+
+        textA = driver.findElement(By.cssSelector("#column-a header")).getText();
+        textB = driver.findElement(By.cssSelector("#column-b header")).getText();
+        System.out.println("After B → A : A=" + textA + " | B=" + textB);
+
+        // ---------------- Task 3: Use click-hold-move-release ----------------
+        actions.clickAndHold(columnA)
+               .moveToElement(columnB)
+               .release()
+               .build()
+               .perform();
+        Thread.sleep(2000);
+
+        textA = driver.findElement(By.cssSelector("#column-a header")).getText();
+        textB = driver.findElement(By.cssSelector("#column-b header")).getText();
+        System.out.println("After click-hold-move-release : A=" + textA + " | B=" + textB);
+
+        driver.quit();
+    }
+}
+

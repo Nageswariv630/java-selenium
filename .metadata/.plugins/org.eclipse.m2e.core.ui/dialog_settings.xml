@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectWizardLocationPage">
+		<list key="location">
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\java wipro\tests\src\test\java\tests\MyListener.java"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\java wipro\paralleltest\pom.xml"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\java wipro\v1"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\java wipro\datadriven_example"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\java wipro\AutomationTasks"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\datadriven_example\datadriven_example"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\datadriven_example\datadriven_example\src\main\java\datadriven_example\DataDrivenTest.java"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArchetypePage">
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="Maven2ProjectWizardArchifactPage">
+		<list key="package">
+		</list>
+		<list key="groupId">
+		</list>
+		<list key="artifactId">
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArtifactPage">
+		<list key="groupId">
+			<item value="com.example"/>
+			<item value="cucumber.javaproject"/>
+			<item value="asdfg"/>
+			<item value="sd"/>
+			<item value="as"/>
+			<item value="xc"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="cucumber-login-demo"/>
+			<item value="cucumbertest"/>
+			<item value="cucumber.javaproject"/>
+			<item value="parameterization"/>
+			<item value="paralleltest"/>
+			<item value="v1"/>
+			<item value="datadriven_example"/>
+			<item value="dfgh"/>
+			<item value="s"/>
+			<item value="add"/>
+			<item value="sd"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="org.eclipse.m2e.core.ui.internal.dialogs.MavenRepositorySearchDialog">
+		<item key="width" value="480"/>
+		<item key="height" value="838"/>
+		<item key="x" value="720"/>
+		<item key="y" value="0"/>
+	</section>
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Documents\cucumber-login-demo[1]"/>
+			<item value="C:\Users\Nageswari vennapusa\OneDrive\Desktop\datadriven_example"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+</section>
